@@ -4,9 +4,23 @@ import (
 	"fmt"
 	"bufio"
 	"os"
+	"net/http"
+	"github.com/Dhananjreddy/pokedexCLI/internal/pokecache"
+	"time"
 )
 
 func main(){
+
+	client:= Client{
+		cache: pokecache.NewCache(5*time.Minute),
+		httpClient: http.Client{},
+	}
+
+	cfg := &config{
+		pokeapiClient: client,
+		caughtPokemon: map[string]Pokemon{},
+	}
+
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
@@ -19,8 +33,14 @@ func main(){
 			}
 			
 			command := words[0]
+			args := []string{}
+			if len(words) > 1 {
+				args = words[1:]
+			}
 			if callback, ok := supportedCommands[command]; ok == true {
-				callback.callback()
+				if err := callback.callback(cfg, args...); err != nil {
+        			fmt.Println("error:", err)
+    			}
 			} else {
 				fmt.Println("Unknown command")
 				continue
