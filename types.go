@@ -402,5 +402,10 @@ func init() {
 			description: "Attempt to catch a pokemon",
 			callback: commandCatch,
 		},
+		"inspect": {
+			name: "inspect <pokemon_name>",
+			description: "View details about a caught Pokemon",
+			callback: commandInspect,
+		},
     }
 }
