@@ -5,7 +5,7 @@ import { PokeAPI } from "./pokeapi.js";
 export type CLICommand = {
   name: string;
   description: string;
-  callback: (state: State) => void;
+  callback: (state: State,  ...args: string[]) => void;
 };
 
 export type State = {
@@ -16,7 +16,7 @@ export type State = {
     nextLocationsUrl: string,
 }
 
-export function initState(): State {
+export function initState(cacheInterval: number): State {
     const element : State = {
         commands: getCommands(),
         readline: createInterface({
@@ -24,7 +24,7 @@ export function initState(): State {
             output: process.stdout,
             prompt: "Pokedex > "
             }),
-        pokeApi: new PokeAPI(),
+        pokeApi: new PokeAPI(cacheInterval),
         prevLocationsUrl: "",
         nextLocationsUrl: "",
     }

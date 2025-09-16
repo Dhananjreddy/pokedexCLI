@@ -2,6 +2,7 @@ import { commandExit } from "./command_exit.js";
 import { CLICommand } from "./state.js";
 import { commandHelp } from "./command_help.js"
 import { commandMapb, commandMapf } from "./command_map.js";
+import { commandExplore } from "./command_explore.js";
 
 export function getCommands(): Record<string, CLICommand> {
   return {
@@ -24,7 +25,12 @@ export function getCommands(): Record<string, CLICommand> {
       name: "mapb",
       description: "Get the previous page of locations",
       callback: commandMapb
-    }
+    },
+    explore: {
+      name: "explore",
+      description: "Explore area and catch pokemon",
+      callback: commandExplore
+    },
     // can add more commands here
   };
 }
