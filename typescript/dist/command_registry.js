@@ -2,6 +2,9 @@ import { commandExit } from "./command_exit.js";
 import { commandHelp } from "./command_help.js";
 import { commandMapb, commandMapf } from "./command_map.js";
 import { commandExplore } from "./command_explore.js";
+import { commandCatch } from "./command_catch.js";
+import { commandInspect } from "./command_inspect.js";
+import { commandPokedex } from "./command_pokedex.js";
 export function getCommands() {
     return {
         exit: {
@@ -29,6 +32,21 @@ export function getCommands() {
             description: "Explore area and catch pokemon",
             callback: commandExplore
         },
+        catch: {
+            name: "catch",
+            description: "Catch a pokemon",
+            callback: commandCatch
+        },
+        inspect: {
+            name: "inspect",
+            description: "Inspect pokemon in your pokedex",
+            callback: commandInspect
+        },
+        pokedex: {
+            name: "pokedex",
+            description: "View your pokemon",
+            callback: commandPokedex
+        }
         // can add more commands here
     };
 }

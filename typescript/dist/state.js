@@ -2,6 +2,7 @@ import { createInterface } from "node:readline";
 import { getCommands } from "./command_registry.js";
 import { PokeAPI } from "./pokeapi.js";
 export function initState(cacheInterval) {
+    let pokedex = {};
     const element = {
         commands: getCommands(),
         readline: createInterface({
@@ -12,6 +13,7 @@ export function initState(cacheInterval) {
         pokeApi: new PokeAPI(cacheInterval),
         prevLocationsUrl: "",
         nextLocationsUrl: "",
+        pokedex: pokedex
     };
     return element;
 }

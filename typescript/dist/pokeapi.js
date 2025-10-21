@@ -13,6 +13,26 @@ export class PokeAPI {
     closeCache() {
         this.cache.stopReapLoop();
     }
+    async fetchPokemon(name) {
+        const url = `${PokeAPI.baseURL}/pokemon/${name}/`;
+        const cached = this.cache.get(url);
+        if (cached) {
+            return cached;
+        }
+        try {
+            // Use curl instead of fetch
+            const { stdout } = await execAsync(`curl -sfS -4 "${url}"`);
+            const pokemon = JSON.parse(stdout);
+            if (!pokemon || typeof pokemon.base_experience !== "number") {
+                throw new Error("Invalid Pokemon response");
+            }
+            this.cache.add(url, pokemon);
+            return pokemon;
+        }
+        catch (e) {
+            throw new Error(`Error fetching pokemon: ${e instanceof Error ? e.message : String(e)}`);
+        }
+    }
     async fetchLocations(pageURL) {
         const url = pageURL || `${PokeAPI.baseURL}/location-area`;
         const cached = this.cache.get(url);
